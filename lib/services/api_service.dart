@@ -10,10 +10,9 @@ class Services {
   static NetworkInfo? _networkInfo;
 
   static ApiClient get apiClient {
-    _apiClient ??= ApiClient(
-      client: throw UnimplementedError('Inject an HTTP client'),
-      baseUrl: 'https://api.example.com/v1', // TODO: Use env config
-    );
+    if (_apiClient == null) {
+      throw UnimplementedError('Inject an HTTP client');
+    }
     return _apiClient!;
   }
 

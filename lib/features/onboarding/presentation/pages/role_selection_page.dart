@@ -47,7 +47,7 @@ class RoleSelectionPage extends StatelessWidget {
           // --- Layer 2: Semi-transparent mustard yellow overlay ---
           Positioned.fill(
             child: Container(
-              color: AppColors.primary.withOpacity(0.9),
+              color: AppColors.primary.withValues(alpha: 0.9),
             ),
           ),
 

@@ -82,7 +82,7 @@ class _SplashPageState extends State<SplashPage>
           // --- Layer 2: Semi-transparent mustard yellow overlay ---
           Positioned.fill(
             child: Container(
-              color: AppColors.primary.withOpacity(0.85),
+              color: AppColors.primary.withValues(alpha: 0.85),
             ),
           ),
 

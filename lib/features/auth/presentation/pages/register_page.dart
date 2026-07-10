@@ -6,14 +6,10 @@ import 'package:home_link/features/auth/presentation/bloc/auth_event.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_state.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/constants/app_dimensions.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../core/utils/extensions.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../routes/app_routes.dart';
-import '../../bloc/auth_bloc.dart';
-import '../../bloc/auth_event.dart';
-import '../../bloc/auth_state.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -82,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
               left: -50,
               child: CircleAvatar(
                 radius: 130,
-                backgroundColor: AppColors.navy.withOpacity(0.06),
+                backgroundColor: AppColors.navy.withValues(alpha: 0.06),
               ),
             ),
             Positioned(
@@ -90,7 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
               right: -70,
               child: CircleAvatar(
                 radius: 100,
-                backgroundColor: AppColors.navy.withOpacity(0.04),
+                backgroundColor: AppColors.navy.withValues(alpha: 0.04),
               ),
             ),
             Positioned(
@@ -98,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
               left: -40,
               child: CircleAvatar(
                 radius: 150,
-                backgroundColor: AppColors.navy.withOpacity(0.05),
+                backgroundColor: AppColors.navy.withValues(alpha: 0.05),
               ),
             ),
 
@@ -258,7 +254,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 backgroundColor: AppColors.navy,
                                 foregroundColor: AppColors.textOnPrimary,
                                 disabledBackgroundColor:
-                                    AppColors.navy.withOpacity(0.6),
+                                    AppColors.navy.withValues(alpha: 0.6),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
