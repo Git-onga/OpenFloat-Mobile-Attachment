@@ -270,7 +270,10 @@ class _LoginPageState extends State<LoginPage> {
                             width: double.infinity,
                             height: 52,
                             child: ElevatedButton(
-                              onPressed: isLoading ? null : _onSubmit,
+                              // replace the logic with Authentication process when you set up the backend
+                              onPressed: () {
+                                Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: AppColors.navy,
                                 foregroundColor: AppColors.textOnPrimary,
