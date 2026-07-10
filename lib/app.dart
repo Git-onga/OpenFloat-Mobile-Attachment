@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/theme/app_theme.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
-import 'features/auth/presentation/bloc/auth_state.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
 import 'providers/dependency_injection.dart';
 import 'routes/app_routes.dart';
@@ -23,18 +22,12 @@ class App extends StatelessWidget {
           create: (_) => DependencyInjection.provideHomeBloc(),
         ),
       ],
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          return MaterialApp(
-            title: 'Home Link',
-            debugShowCheckedModeBanner: false,
-            theme: AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: ThemeMode.system,
-            initialRoute: RouteGenerator.getInitialRoute(state),
-            onGenerateRoute: RouteGenerator.generateRoute,
-          );
-        },
+      child: MaterialApp(
+        title: 'Kazi Connect',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.lightTheme,
+        initialRoute: AppRoutes.splash,
+        onGenerateRoute: RouteGenerator.generateRoute,
       ),
     );
   }

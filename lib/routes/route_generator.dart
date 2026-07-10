@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/presentation/bloc/auth_bloc.dart';
-import '../../features/auth/presentation/bloc/auth_state.dart';
-import '../../features/auth/presentation/pages/login_page.dart';
-import '../../features/auth/presentation/pages/register_page.dart';
-import '../../features/home/presentation/bloc/home_bloc.dart';
-import '../../features/home/presentation/pages/home_page.dart';
+import '../features/auth/presentation/pages/login_page.dart';
+import '../features/auth/presentation/pages/register_page.dart';
+import '../features/home/presentation/pages/home_page.dart';
+import '../features/onboarding/presentation/pages/role_selection_page.dart';
+import '../features/splash/presentation/pages/splash_page.dart';
 import 'app_routes.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case AppRoutes.splash:
+        return MaterialPageRoute(builder: (_) => const SplashPage());
+
+      case AppRoutes.roleSelection:
+        return MaterialPageRoute(builder: (_) => const RoleSelectionPage());
+
       case AppRoutes.login:
         return MaterialPageRoute(builder: (_) => const LoginPage());
 
@@ -30,13 +34,5 @@ class RouteGenerator {
           ),
         );
     }
-  }
-
-  /// Determines the initial route based on auth state
-  static String getInitialRoute(AuthState authState) {
-    if (authState.status == AuthStatus.authenticated) {
-      return AppRoutes.home;
-    }
-    return AppRoutes.login;
   }
 }

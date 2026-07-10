@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
                       const SizedBox(height: AppDimensions.spacingMd),
                       Text(
                         'No items yet',
-                        style: context.textTheme.headline3,
+                        style: context.textTheme.displaySmall,
                       ),
                       const SizedBox(height: AppDimensions.spacingXs),
                       Text(
