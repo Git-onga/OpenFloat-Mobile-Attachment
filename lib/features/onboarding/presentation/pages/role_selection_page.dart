@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../features/provider/presentation/pages/provider_shell.dart';
 import '../../../../routes/app_routes.dart';
 
 class RoleSelectionPage extends StatelessWidget {
@@ -132,12 +133,13 @@ class RoleSelectionPage extends StatelessWidget {
 
                   // "Service Provider" button - navy bg, white outline
                   SizedBox(
-                    width: 200,
+                    width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.register);
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => const ProviderShell()),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.navy,
