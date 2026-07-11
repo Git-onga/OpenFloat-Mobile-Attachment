@@ -17,7 +17,7 @@ class JobCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -40,98 +40,110 @@ class JobCard extends StatelessWidget {
   }
 
   Widget _buildTopBar() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: const BoxDecoration(
-        color: AppColors.navy,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(14),
-          topRight: Radius.circular(14),
-        ),
-      ),
-      child: Row(
-        children: [
-          // -- Left: Notification circle --
-          Container(
-            width: 30,
-            height: 30,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.primary,
-            ),
-            child: const Icon(
-              Icons.notifications_outlined,
-              color: AppColors.navy,
-              size: 16,
+    return Builder(
+      builder: (context) {
+        final isDark = Theme.of(context).brightness == Brightness.dark;
+        final headerBg = isDark ? Theme.of(context).colorScheme.surface : AppColors.navy;
+        final headerText = isDark ? AppColors.navy : AppColors.textOnPrimary;
+        final headerAccent = AppColors.primary;
+        final headerSubtext = isDark
+            ? AppColors.navy.withValues(alpha: 0.6)
+            : AppColors.textOnPrimary.withValues(alpha: 0.7);
+
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: headerBg,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(14),
+              topRight: Radius.circular(14),
             ),
           ),
-
-          const SizedBox(width: 12),
-
-          // -- Middle: Job ID + Status --
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Job ${item.jobId ?? item.id}',
-                  style: GoogleFonts.nunito(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textOnPrimary,
-                  ),
-                ),
-                const SizedBox(height: 1),
-                Text(
-                  item.jobStatus ?? 'In Progress',
-                  style: GoogleFonts.nunito(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-          ),
-
-          // -- Right: Clock + Elapsed Time --
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
+          child: Row(
             children: [
-              Row(
+              // -- Left: Notification circle --
+              Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: headerAccent,
+                ),
+                child: Icon(
+                  Icons.notifications_outlined,
+                  color: headerText,
+                  size: 16,
+                ),
+              ),
+
+              const SizedBox(width: 12),
+
+              // -- Middle: Job ID + Status --
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Job ${item.jobId ?? item.id}',
+                      style: GoogleFonts.nunito(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w700,
+                        color: headerText,
+                      ),
+                    ),
+                    const SizedBox(height: 1),
+                    Text(
+                      item.jobStatus ?? 'In Progress',
+                      style: GoogleFonts.nunito(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: headerAccent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // -- Right: Clock + Elapsed Time --
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
-                    Icons.access_time_rounded,
-                    color: AppColors.primary,
-                    size: 13,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.access_time_rounded,
+                        color: headerAccent,
+                        size: 13,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Elapsed Time',
+                        style: GoogleFonts.nunito(
+                          fontSize: 9,
+                          fontWeight: FontWeight.w500,
+                          color: headerSubtext,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(height: 2),
                   Text(
-                    'Elapsed Time',
+                    item.elapsedTime ?? '00:00:00',
                     style: GoogleFonts.nunito(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textOnPrimary.withValues(alpha: 0.7),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: headerText,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 2),
-              Text(
-                item.elapsedTime ?? '00:00:00',
-                style: GoogleFonts.nunito(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.textOnPrimary,
-                ),
-              ),
             ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -152,7 +164,7 @@ class JobCard extends StatelessWidget {
                   height: 48,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.inputFill,
+                    color: Theme.of(context).inputDecorationTheme.fillColor!,
                     border: Border.all(
                       color: AppColors.navy.withValues(alpha: 0.15),
                       width: 2,
@@ -185,7 +197,7 @@ class JobCard extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 13,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
                   textAlign: TextAlign.center,
                   maxLines: 1,
@@ -200,7 +212,7 @@ class JobCard extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 11,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -263,7 +275,7 @@ class JobCard extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
+                    color: Theme.of(context).colorScheme.onSurface,
                     height: 1.4,
                   ),
                   maxLines: 4,

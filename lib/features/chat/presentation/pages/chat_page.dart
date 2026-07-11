@@ -120,9 +120,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.navy, size: 20),
@@ -136,7 +134,7 @@ class _ChatPageState extends State<ChatPage> {
               height: 36,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.inputFill,
+                color: Theme.of(context).inputDecorationTheme.fillColor!,
                 border: Border.all(
                   color: AppColors.navy.withValues(alpha: 0.15),
                   width: 2,
@@ -162,7 +160,7 @@ class _ChatPageState extends State<ChatPage> {
                     style: GoogleFonts.nunito(
                       fontSize: 11,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
               ],
@@ -204,7 +202,7 @@ class _ChatPageState extends State<ChatPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
             color: AppColors.navy.withValues(alpha: 0.05),
@@ -222,16 +220,16 @@ class _ChatPageState extends State<ChatPage> {
                 textCapitalization: TextCapitalization.sentences,
                 style: GoogleFonts.nunito(
                   fontSize: 14,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Type a message...',
                   hintStyle: GoogleFonts.nunito(
                     fontSize: 14,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                   filled: true,
-                  fillColor: AppColors.inputFill,
+                  fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: 16,
                     vertical: 12,

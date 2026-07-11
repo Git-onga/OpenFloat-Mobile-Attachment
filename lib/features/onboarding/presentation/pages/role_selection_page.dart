@@ -88,7 +88,6 @@ class RoleSelectionPage extends StatelessWidget {
                             .pushReplacementNamed(AppRoutes.register);
                       },
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.background,
                         side: const BorderSide(
                           color: AppColors.navy,
                           width: 2,

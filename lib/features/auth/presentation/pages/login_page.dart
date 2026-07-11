@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
         body: Stack(
           children: [
             // --- White background ---
-            Positioned.fill(child: Container(color: AppColors.background)),
+            Positioned.fill(child: Container(color: Theme.of(context).colorScheme.surface)),
 
             // --- Decorative navy circles with reduced opacity ---
             Positioned(
@@ -142,12 +142,12 @@ class _LoginPageState extends State<LoginPage> {
                             textInputAction: TextInputAction.next,
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: InputDecoration(
                               hintText: AppStrings.email,
                               filled: true,
-                              fillColor: AppColors.inputFill,
+                              fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 15,
@@ -187,12 +187,12 @@ class _LoginPageState extends State<LoginPage> {
                             onFieldSubmitted: (_) => _onSubmit(),
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: InputDecoration(
                               hintText: AppStrings.password,
                               filled: true,
-                              fillColor: AppColors.inputFill,
+                              fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 15,
@@ -223,7 +223,7 @@ class _LoginPageState extends State<LoginPage> {
                                   _obscurePassword
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                   size: 20,
                                 ),
                                 onPressed: () {
@@ -308,7 +308,7 @@ class _LoginPageState extends State<LoginPage> {
                                 AppStrings.dontHaveAccount,
                                 style: GoogleFonts.nunito(
                                   fontSize: 14,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               GestureDetector(

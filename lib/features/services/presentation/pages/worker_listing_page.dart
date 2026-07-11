@@ -15,9 +15,7 @@ class WorkerListingPage extends StatelessWidget {
     final workers = workersByCategory[category] ?? [];
 
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.navy, size: 20),
@@ -47,7 +45,7 @@ class WorkerListingPage extends StatelessWidget {
                       color: AppColors.navy.withValues(alpha: 0.3)),
                   const SizedBox(height: 12),
                   Text('No workers available yet',
-                      style: GoogleFonts.nunito(fontSize: 15, color: AppColors.textSecondary)),
+                      style: GoogleFonts.nunito(fontSize: 15, color: Theme.of(context).colorScheme.onSurfaceVariant)),
                 ],
               ),
             )
@@ -81,7 +79,7 @@ class _WorkerCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 12),
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
         ),
@@ -119,7 +117,7 @@ class _WorkerCard extends StatelessWidget {
                     style: GoogleFonts.nunito(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
+                      color: Theme.of(context).colorScheme.onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
@@ -128,7 +126,7 @@ class _WorkerCard extends StatelessWidget {
                     style: GoogleFonts.nunito(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -152,13 +150,13 @@ class _WorkerCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Icon(Icons.work_outline, size: 12, color: AppColors.textSecondary),
+                      Icon(Icons.work_outline, size: 12, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       const SizedBox(width: 3),
                       Text(
                         '${worker.completedJobs} jobs',
                         style: GoogleFonts.nunito(
                           fontSize: 11,
-                          color: AppColors.textSecondary,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -184,7 +182,7 @@ class _WorkerCard extends StatelessWidget {
                   '/hr',
                   style: GoogleFonts.nunito(
                     fontSize: 10,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 6),

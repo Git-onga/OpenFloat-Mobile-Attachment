@@ -11,6 +11,12 @@ extension BuildContextX on BuildContext {
   double get screenHeight => MediaQuery.of(this).size.height;
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
 
+  /// Theme-aware colors that switch between light/dark
+  Color get surfaceColor => colorScheme.surface;
+  Color get textPrimaryColor => colorScheme.onSurface;
+  Color get textSecondaryColor => colorScheme.onSurfaceVariant;
+  Color get scaffoldBgColor => Theme.of(this).scaffoldBackgroundColor;
+
   NavigatorState get navigator => Navigator.of(this);
   ScaffoldMessengerState get scaffoldMessenger => ScaffoldMessenger.of(this);
 }

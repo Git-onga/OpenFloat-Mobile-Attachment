@@ -48,7 +48,7 @@ class _ServicesPageState extends State<ServicesPage> {
                 style: GoogleFonts.nunito(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),
               ),
             ),
@@ -62,21 +62,21 @@ class _ServicesPageState extends State<ServicesPage> {
                 onChanged: (v) => setState(() => _searchQuery = v),
                 style: GoogleFonts.nunito(
                   fontSize: 14,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Search services...',
                   hintStyle: GoogleFonts.nunito(
                     fontSize: 14,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.search_rounded,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                     size: 22,
                   ),
                   filled: true,
-                  fillColor: AppColors.inputFill,
+                  fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
                   contentPadding: const EdgeInsets.symmetric(vertical: 13),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -127,7 +127,7 @@ class _ServicesPageState extends State<ServicesPage> {
                             style: GoogleFonts.nunito(
                               fontSize: 15,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.textSecondary,
+                              color: Theme.of(context).colorScheme.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -245,7 +245,7 @@ class _CategoryCard extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.background,
+          color: Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: AppColors.border.withValues(alpha: 0.6),
@@ -279,7 +279,7 @@ class _CategoryCard extends StatelessWidget {
                 style: GoogleFonts.nunito(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                  color: Theme.of(context).colorScheme.onSurface,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -293,7 +293,7 @@ class _CategoryCard extends StatelessWidget {
                 style: GoogleFonts.nunito(
                   fontSize: 10,
                   fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondary,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   height: 1.3,
                 ),
                 maxLines: 2,

@@ -70,7 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
         body: Stack(
           children: [
             // --- White background ---
-            Positioned.fill(child: Container(color: AppColors.background)),
+            Positioned.fill(child: Container(color: Theme.of(context).colorScheme.surface)),
 
             // --- Decorative navy circles with reduced opacity ---
             Positioned(
@@ -150,7 +150,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputAction: TextInputAction.next,
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: _inputDecoration(
                               AppStrings.fullName,
@@ -167,7 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputAction: TextInputAction.next,
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: _inputDecoration(
                               AppStrings.email,
@@ -184,7 +184,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             textInputAction: TextInputAction.next,
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: _inputDecoration(
                               AppStrings.password,
@@ -193,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   _obscurePassword
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                   size: 20,
                                 ),
                                 onPressed: () {
@@ -215,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             onFieldSubmitted: (_) => _onSubmit(),
                             style: GoogleFonts.nunito(
                               fontSize: 15,
-                              color: AppColors.textPrimary,
+                              color: Theme.of(context).colorScheme.onSurface,
                             ),
                             decoration: _inputDecoration(
                               AppStrings.confirmPassword,
@@ -224,7 +224,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   _obscureConfirm
                                       ? Icons.visibility_off_outlined
                                       : Icons.visibility_outlined,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                   size: 20,
                                 ),
                                 onPressed: () {
@@ -288,7 +288,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 AppStrings.alreadyHaveAccount,
                                 style: GoogleFonts.nunito(
                                   fontSize: 14,
-                                  color: AppColors.textSecondary,
+                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                                 ),
                               ),
                               GestureDetector(
@@ -327,7 +327,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return InputDecoration(
       hintText: hint,
       filled: true,
-      fillColor: AppColors.inputFill,
+      fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 15,

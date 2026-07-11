@@ -10,9 +10,7 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.navy, size: 20),
@@ -202,7 +200,7 @@ class _ConversationTile extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: AppColors.success,
                         border: Border.all(
-                          color: AppColors.background,
+                          color: Theme.of(context).colorScheme.surface,
                           width: 2,
                         ),
                       ),
@@ -227,7 +225,7 @@ class _ConversationTile extends StatelessWidget {
                           style: GoogleFonts.nunito(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,

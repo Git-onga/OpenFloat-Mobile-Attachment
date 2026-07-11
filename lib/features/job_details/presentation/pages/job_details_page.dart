@@ -13,9 +13,7 @@ class JobDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.navy, size: 20),
@@ -37,13 +35,13 @@ class JobDetailsPage extends StatelessWidget {
           children: [
             _buildHeader(),
             const SizedBox(height: 16),
-            _buildTimeline(),
+            _buildTimeline(context),
             const SizedBox(height: 16),
             _buildWorkerCard(context),
             const SizedBox(height: 12),
-            _buildJobDescription(),
+            _buildJobDescription(context),
             const SizedBox(height: 12),
-            _buildPaymentCard(),
+            _buildPaymentCard(context),
             const SizedBox(height: 16),
             _buildActionButtons(context),
             const SizedBox(height: 24),
@@ -124,7 +122,7 @@ class JobDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTimeline() {
+  Widget _buildTimeline(BuildContext context) {
     final stages = [
       _TimelineStage('Booking Confirmed', 'Your booking has been confirmed',
           'Jul 10, 09:30 AM', true, false),
@@ -144,7 +142,7 @@ class JobDetailsPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
@@ -158,13 +156,13 @@ class JobDetailsPage extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           for (int i = 0; i < stages.length; i++)
-            _buildTimelineItem(stages[i], i == stages.length - 1),
+            _buildTimelineItem(context, stages[i], i == stages.length - 1),
         ],
       ),
     );
   }
 
-  Widget _buildTimelineItem(_TimelineStage stage, bool isLast) {
+  Widget _buildTimelineItem(BuildContext context, _TimelineStage stage, bool isLast) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -211,7 +209,7 @@ class JobDetailsPage extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(stage.subtitle,
                   style: GoogleFonts.nunito(fontSize: 11, fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 2),
@@ -232,7 +230,7 @@ class JobDetailsPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
@@ -251,7 +249,7 @@ class JobDetailsPage extends StatelessWidget {
                 width: 56, height: 56,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.inputFill,
+                  color: Theme.of(context).inputDecorationTheme.fillColor!,
                   border: Border.all(
                     color: AppColors.navy.withValues(alpha: 0.15), width: 2,
                   ),
@@ -266,14 +264,14 @@ class JobDetailsPage extends StatelessWidget {
                     Text(job.workerName ?? 'Worker',
                       style: GoogleFonts.nunito(
                         fontSize: 16, fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(job.workerProfession ?? '',
                       style: GoogleFonts.nunito(
                         fontSize: 12, fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondary,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -326,12 +324,12 @@ class JobDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildJobDescription() {
+  Widget _buildJobDescription(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
@@ -348,7 +346,7 @@ class JobDetailsPage extends StatelessWidget {
             job.jobDetails ?? job.description,
             style: GoogleFonts.nunito(
               fontSize: 13, fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary, height: 1.5,
+              color: Theme.of(context).colorScheme.onSurface, height: 1.5,
             ),
           ),
         ],
@@ -356,11 +354,11 @@ class JobDetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentCard() {
+  Widget _buildPaymentCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
       ),
@@ -373,22 +371,22 @@ class JobDetailsPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          _payRow('Hourly Rate', job.hourlyRate ?? 'KES 0/='),
+          _payRow(context, 'Hourly Rate', job.hourlyRate ?? 'KES 0/='),
           const SizedBox(height: 8),
           const Divider(color: AppColors.border),
           const SizedBox(height: 8),
-          _payRow('Estimated Total', 'KES 300/='),
+          _payRow(context, 'Estimated Total', 'KES 300/='),
         ],
       ),
     );
   }
 
-  Widget _payRow(String label, String value) {
+  Widget _payRow(BuildContext context, String label, String value) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(label,
-          style: GoogleFonts.nunito(fontSize: 13, color: AppColors.textSecondary),
+          style: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
         ),
         Text(value,
           style: GoogleFonts.nunito(

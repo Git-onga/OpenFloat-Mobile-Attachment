@@ -36,13 +36,11 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
     _selectedService = _selectedService.isEmpty ? w.services.first : _selectedService;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
           // ─── AppBar ──────────────────────────
           SliverAppBar(
             pinned: true,
-            backgroundColor: AppColors.background,
             elevation: 0,
             leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios, color: AppColors.navy, size: 20),
@@ -131,11 +129,11 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
 
           const SizedBox(height: 10),
           Text(w.name,
-            style: GoogleFonts.nunito(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+            style: GoogleFonts.nunito(fontSize: 20, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
           ),
           const SizedBox(height: 4),
           Text(w.profession,
-            style: GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+            style: GoogleFonts.nunito(fontSize: 14, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
 
           const SizedBox(height: 8),
@@ -219,7 +217,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
             ),
             const SizedBox(height: 2),
             Text(label,
-              style: GoogleFonts.nunito(fontSize: 10, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+              style: GoogleFonts.nunito(fontSize: 10, fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurfaceVariant),
             ),
           ],
         ),
@@ -239,7 +237,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
           const SizedBox(height: 8),
           Text(content,
             style: GoogleFonts.nunito(fontSize: 13, fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary, height: 1.5,
+              color: Theme.of(context).colorScheme.onSurface, height: 1.5,
             ),
           ),
         ],
@@ -355,10 +353,10 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(r.customerName,
-                      style: GoogleFonts.nunito(fontSize: 13, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                      style: GoogleFonts.nunito(fontSize: 13, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
                     ),
                     Text(r.date,
-                      style: GoogleFonts.nunito(fontSize: 10, color: AppColors.textSecondary),
+                      style: GoogleFonts.nunito(fontSize: 10, color: Theme.of(context).colorScheme.onSurfaceVariant),
                     ),
                   ],
                 ),
@@ -372,7 +370,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
                 const SizedBox(height: 6),
                 Text(r.comment,
                   style: GoogleFonts.nunito(fontSize: 12, fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary, height: 1.4,
+                    color: Theme.of(context).colorScheme.onSurface, height: 1.4,
                   ),
                 ),
               ],
@@ -410,7 +408,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
                 ),
                 const SizedBox(height: 4),
                 Text('${w.lat.toStringAsFixed(4)}, ${w.lng.toStringAsFixed(4)}',
-                  style: GoogleFonts.nunito(fontSize: 11, color: AppColors.textSecondary),
+                  style: GoogleFonts.nunito(fontSize: 11, color: Theme.of(context).colorScheme.onSurfaceVariant),
                 ),
                 const SizedBox(height: 10),
                 GestureDetector(
@@ -476,28 +474,28 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
                 children: [
                   TextField(
                     controller: _bookingNameCtrl,
-                    style: GoogleFonts.nunito(fontSize: 13, color: AppColors.textPrimary),
+                    style: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     decoration: _inputDeco('Your Name'),
                   ),
                   const SizedBox(height: 10),
                   TextField(
                     controller: _bookingPhoneCtrl,
                     keyboardType: TextInputType.phone,
-                    style: GoogleFonts.nunito(fontSize: 13, color: AppColors.textPrimary),
+                    style: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     decoration: _inputDeco('Phone Number'),
                   ),
                   const SizedBox(height: 10),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 14),
                     decoration: BoxDecoration(
-                      color: AppColors.inputFill,
+                      color: Theme.of(context).inputDecorationTheme.fillColor!,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _selectedService,
                         isExpanded: true,
-                        style: GoogleFonts.nunito(fontSize: 13, color: AppColors.textPrimary),
+                        style: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                         items: w.services.map((s) => DropdownMenuItem(
                           value: s,
                           child: Text(s, style: GoogleFonts.nunito(fontSize: 13)),
@@ -510,7 +508,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
                   TextField(
                     controller: _bookingDescCtrl,
                     maxLines: 3,
-                    style: GoogleFonts.nunito(fontSize: 13, color: AppColors.textPrimary),
+                    style: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurface),
                     decoration: _inputDeco('Describe the job...'),
                   ),
                   const SizedBox(height: 14),
@@ -552,9 +550,9 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
   InputDecoration _inputDeco(String hint) {
     return InputDecoration(
       hintText: hint,
-      hintStyle: GoogleFonts.nunito(fontSize: 13, color: AppColors.textSecondary),
+      hintStyle: GoogleFonts.nunito(fontSize: 13, color: Theme.of(context).colorScheme.onSurfaceVariant),
       filled: true,
-      fillColor: AppColors.inputFill,
+      fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
       contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
       enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide.none),
@@ -569,7 +567,7 @@ class _WorkerProfilePageState extends State<WorkerProfilePage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.background,
+        color: Theme.of(context).colorScheme.surface,
         boxShadow: [BoxShadow(color: AppColors.navy.withValues(alpha: 0.08), blurRadius: 10, offset: const Offset(0, -2))],
       ),
       child: SafeArea(

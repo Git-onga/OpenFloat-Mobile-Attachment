@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../../chat/presentation/pages/chat_list_page.dart';
+import '../../../bookings/presentation/pages/bookings_page.dart';
 import '../../../profile/presentation/pages/profile_page.dart';
 import '../../../services/presentation/pages/services_page.dart';
 import '../bloc/home_bloc.dart';
@@ -34,7 +35,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       body: SafeArea(
         child: IndexedStack(
           index: _currentTab,
@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
             // Tab 1: Services
             const ServicesPage(),
 
-            // Tab 2: Bookings (placeholder)
-            _buildPlaceholder('Bookings', Icons.bookmark_outline),
+            // Tab 2: Bookings
+            const BookingsPage(),
 
             // Tab 3: Profile
             const ProfilePage(),
@@ -60,34 +60,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: _buildBottomNav(),
-    );
-  }
-
-  Widget _buildPlaceholder(String title, IconData icon) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 64, color: AppColors.navy.withValues(alpha: 0.3)),
-          const SizedBox(height: 16),
-          Text(
-            title,
-            style: GoogleFonts.baloo2(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-              color: AppColors.navy.withValues(alpha: 0.5),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            'Coming soon',
-            style: GoogleFonts.nunito(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -176,7 +148,7 @@ class _HomePageState extends State<HomePage> {
             style: GoogleFonts.nunito(
               fontSize: 12,
               fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
             ),
           ),
 
@@ -232,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                     state.errorMessage ?? 'Something went wrong',
                     style: GoogleFonts.nunito(
                       fontSize: 14,
-                      color: AppColors.textSecondary,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -299,9 +271,13 @@ class _HomePageState extends State<HomePage> {
 
   // ─── Bottom Navigation ───────────────────────────────
   Widget _buildBottomNav() {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final navBg = isDark ? Theme.of(context).colorScheme.surface : AppColors.navy;
+    final navInactive = isDark ? AppColors.textSecondary : AppColors.textOnPrimary;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.navy,
+        color: navBg,
         boxShadow: [
           BoxShadow(
             color: AppColors.navy.withValues(alpha: 0.3),
@@ -316,13 +292,10 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _navItem(Icons.home_outlined, Icons.home_rounded, 'Home', 0),
-              _navItem(
-                  Icons.build_outlined, Icons.build_rounded, 'Service', 1),
-              _navItem(Icons.bookmark_outline, Icons.bookmark_rounded,
-                  'Booking', 2),
-              _navItem(
-                  Icons.person_outline, Icons.person_rounded, 'Profile', 3),
+              _navItem(Icons.home_outlined, Icons.home_rounded, 'Home', 0, AppColors.primary, navInactive),
+              _navItem(Icons.build_outlined, Icons.build_rounded, 'Service', 1, AppColors.primary, navInactive),
+              _navItem(Icons.bookmark_outline, Icons.bookmark_rounded, 'Booking', 2, AppColors.primary, navInactive),
+              _navItem(Icons.person_outline, Icons.person_rounded, 'Profile', 3, AppColors.primary, navInactive),
             ],
           ),
         ),
@@ -330,14 +303,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _navItem(
-      IconData icon, IconData activeIcon, String label, int index) {
+  Widget _navItem(IconData icon, IconData activeIcon, String label,
+      int index, Color activeColor, Color inactiveColor) {
     final isActive = _currentTab == index;
 
     return GestureDetector(
       onTap: () {
         setState(() => _currentTab = index);
-        // TODO: Navigate or switch tab content
       },
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
@@ -348,7 +320,7 @@ class _HomePageState extends State<HomePage> {
             Icon(
               isActive ? activeIcon : icon,
               size: 22,
-              color: isActive ? AppColors.primary : AppColors.textOnPrimary,
+              color: isActive ? activeColor : inactiveColor,
             ),
             const SizedBox(height: 3),
             Text(
@@ -356,7 +328,7 @@ class _HomePageState extends State<HomePage> {
               style: GoogleFonts.nunito(
                 fontSize: 10,
                 fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-                color: isActive ? AppColors.primary : AppColors.textOnPrimary,
+                color: isActive ? activeColor : inactiveColor,
               ),
             ),
           ],
