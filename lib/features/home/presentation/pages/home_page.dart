@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../routes/app_routes.dart';
 import '../../../chat/presentation/pages/chat_list_page.dart';
+import '../../../profile/presentation/pages/profile_page.dart';
+import '../../../services/presentation/pages/services_page.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
@@ -34,24 +36,58 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
-        child: Column(
+        child: IndexedStack(
+          index: _currentTab,
           children: [
-            // === Top Header ===
-            _buildHeader(),
-
-            // === Location Section ===
-            _buildLocationSection(),
-
-            // === Content Area ===
-            Expanded(
-              child: _buildContent(),
+            // Tab 0: Home
+            Column(
+              children: [
+                _buildHeader(),
+                _buildLocationSection(),
+                Expanded(child: _buildContent()),
+              ],
             ),
+
+            // Tab 1: Services
+            const ServicesPage(),
+
+            // Tab 2: Bookings (placeholder)
+            _buildPlaceholder('Bookings', Icons.bookmark_outline),
+
+            // Tab 3: Profile
+            const ProfilePage(),
           ],
         ),
       ),
-
-      // === Bottom Navigation ===
       bottomNavigationBar: _buildBottomNav(),
+    );
+  }
+
+  Widget _buildPlaceholder(String title, IconData icon) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 64, color: AppColors.navy.withValues(alpha: 0.3)),
+          const SizedBox(height: 16),
+          Text(
+            title,
+            style: GoogleFonts.baloo2(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: AppColors.navy.withValues(alpha: 0.5),
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Coming soon',
+            style: GoogleFonts.nunito(
+              fontSize: 14,
+              color: AppColors.textSecondary,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
