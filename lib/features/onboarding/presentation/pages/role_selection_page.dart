@@ -21,7 +21,7 @@ class RoleSelectionPage extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.3),
                 // City skyline at center
-               SizedBox(
+                SizedBox(
                   height: 350, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -29,9 +29,9 @@ class RoleSelectionPage extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-                
+
                 // Electrician at bottom
-                 SizedBox(
+                SizedBox(
                   height: 150, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -39,16 +39,13 @@ class RoleSelectionPage extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-                
               ],
             ),
           ),
 
           // --- Layer 2: Semi-transparent mustard yellow overlay ---
           Positioned.fill(
-            child: Container(
-              color: AppColors.primary.withOpacity(0.9),
-            ),
+            child: Container(color: AppColors.primary.withValues(alpha: 0.9)),
           ),
 
           // --- Layer 3: Content ---
@@ -57,7 +54,7 @@ class RoleSelectionPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                 crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 120),
 
@@ -75,7 +72,7 @@ class RoleSelectionPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 120,),
+                  const SizedBox(height: 120),
 
                   // --- Role buttons ---
                   // "Client" button - white bg, navy outline
@@ -84,15 +81,13 @@ class RoleSelectionPage extends StatelessWidget {
                     height: 56,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.register);
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.register);
                       },
                       style: OutlinedButton.styleFrom(
                         backgroundColor: AppColors.background,
-                        side: const BorderSide(
-                          color: AppColors.navy,
-                          width: 2,
-                        ),
+                        side: const BorderSide(color: AppColors.navy, width: 2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -113,7 +108,9 @@ class RoleSelectionPage extends StatelessWidget {
                   // Separator line
                   Row(
                     children: [
-                      const Expanded(child: Divider(color: AppColors.navy, thickness: 1)),
+                      const Expanded(
+                        child: Divider(color: AppColors.navy, thickness: 1),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
@@ -125,7 +122,9 @@ class RoleSelectionPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Expanded(child: Divider(color: AppColors.navy, thickness: 1)),
+                      const Expanded(
+                        child: Divider(color: AppColors.navy, thickness: 1),
+                      ),
                     ],
                   ),
 
@@ -137,8 +136,9 @@ class RoleSelectionPage extends StatelessWidget {
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.register);
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.register);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.navy,

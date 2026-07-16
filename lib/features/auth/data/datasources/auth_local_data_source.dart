@@ -1,6 +1,4 @@
-import '../../domain/entities/user.dart';
 import '../models/user_model.dart';
-import 'auth_remote_data_source.dart';
 
 /// Placeholder for local auth data storage (e.g., SharedPreferences, Hive)
 abstract class AuthLocalDataSource {
