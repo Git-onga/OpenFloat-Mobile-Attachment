@@ -6,9 +6,9 @@ A new Flutter project.
 
 ### The UI Design Mockups
 ![alt text](assets/images/design/SplashScreen.png)
-![alt text](<assets/images/design/Role Selection.png>)
-![alt text](<assets/images/design/Log in.png>)
-![alt text](<assets/images/design/Sign Up.png>)
+![alt text](assets/images/design/Role Selection.png)
+![alt text](assets/images/design/Log in.png)
+![alt text](assets/images/design/Sign Up.png)
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
