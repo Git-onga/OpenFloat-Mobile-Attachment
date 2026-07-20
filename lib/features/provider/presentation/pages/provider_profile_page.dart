@@ -19,7 +19,7 @@ class _ProviderProfilePageState extends State<ProviderProfilePage> {
   final _locationCtrl = TextEditingController(text: providerLocation);
   bool _showAddPortfolio = false;
   final _portfolioDescCtrl = TextEditingController();
-  List<String> _portfolio = List.from(providerPortfolio);
+  final List<String> _portfolio = List.from(providerPortfolio);
 
   @override
   void dispose() {
@@ -109,7 +109,7 @@ class _ProviderProfilePageState extends State<ProviderProfilePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _miniStat('${providerCompletedJobs}', 'Jobs'),
+                    _miniStat('$providerCompletedJobs', 'Jobs'),
                     _miniStat('$providerYearsExp yrs', 'Exp'),
                     _miniStat(providerHourlyRate, '/hr'),
                   ],
