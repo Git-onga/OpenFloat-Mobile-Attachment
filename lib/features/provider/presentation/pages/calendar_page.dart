@@ -6,7 +6,6 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = ThemeAdapter.theme;
 
     return Container(
       padding: const EdgeInsets.all(24),
@@ -16,7 +15,7 @@ class CalendarPage extends StatelessWidget {
         children: [
           Text(
             'Calendar',
-            style: theme.textTheme.headlineMedium?.copyWith(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               color: AppColors.textPrimary,
             ),
@@ -24,7 +23,7 @@ class CalendarPage extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             'View your scheduled jobs and appointments',
-            style: theme.textTheme.bodyLarge?.copyWith(
+            style: TextStyle(
               color: AppColors.textSecondary,
             ),
           ),
@@ -49,14 +48,14 @@ class CalendarPage extends StatelessWidget {
                       const SizedBox(height: 16),
                       Text(
                         'Calendar View Coming Soon',
-                        style: theme.textTheme.titleLarge?.copyWith(
+                        style: TextStyle(
                           color: AppColors.textSecondary,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Your scheduled jobs will appear here',
-                        style: theme.textTheme.bodyMedium?.copyWith(
+                        style: TextStyle(
                           color: AppColors.textSecondary,
                         ),
                       ),
