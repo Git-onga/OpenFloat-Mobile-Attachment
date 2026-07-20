@@ -34,11 +34,11 @@ class _LoginPageState extends State<LoginPage> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            LoginSubmitted(
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim(),
-            ),
-          );
+        LoginSubmitted(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ),
+      );
     }
   }
 
@@ -228,7 +228,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 onPressed: () {
                                   setState(
-                                      () => _obscurePassword = !_obscurePassword);
+                                    () => _obscurePassword = !_obscurePassword,
+                                  );
                                 },
                               ),
                             ),
@@ -313,9 +314,9 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context)
-                                      .pushReplacementNamed(
-                                          AppRoutes.register);
+                                  Navigator.of(
+                                    context,
+                                  ).pushReplacementNamed(AppRoutes.register);
                                 },
                                 child: Text(
                                   AppStrings.registerHere,

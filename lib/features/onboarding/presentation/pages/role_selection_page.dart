@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_link/features/provider_dashboard/pages/dashboard_page.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
 import '../../../../features/provider/presentation/pages/provider_shell.dart';
 import '../../../../routes/app_routes.dart';
+
+import '../../../provider/presentation/pages/calendar_page.dart';
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key});
@@ -22,7 +25,7 @@ class RoleSelectionPage extends StatelessWidget {
               children: [
                 SizedBox(height: size.height * 0.3),
                 // City skyline at center
-               SizedBox(
+                SizedBox(
                   height: 350, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -30,9 +33,9 @@ class RoleSelectionPage extends StatelessWidget {
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-                
+
                 // Electrician at bottom
-                 SizedBox(
+                SizedBox(
                   height: 150, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -40,7 +43,6 @@ class RoleSelectionPage extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -58,7 +60,7 @@ class RoleSelectionPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 32),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                 crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(height: 120),
 
@@ -76,7 +78,7 @@ class RoleSelectionPage extends StatelessWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 120,),
+                  const SizedBox(height: 120),
 
                   // --- Role buttons ---
                   // "Client" button - white bg, navy outline
@@ -85,8 +87,9 @@ class RoleSelectionPage extends StatelessWidget {
                     height: 56,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRoutes.register);
+                        Navigator.of(
+                          context,
+                        ).pushReplacementNamed(AppRoutes.register);
                       },
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(
@@ -113,7 +116,9 @@ class RoleSelectionPage extends StatelessWidget {
                   // Separator line
                   Row(
                     children: [
-                      const Expanded(child: Divider(color: AppColors.navy, thickness: 1)),
+                      const Expanded(
+                        child: Divider(color: AppColors.navy, thickness: 1),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
@@ -125,7 +130,9 @@ class RoleSelectionPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Expanded(child: Divider(color: AppColors.navy, thickness: 1)),
+                      const Expanded(
+                        child: Divider(color: AppColors.navy, thickness: 1),
+                      ),
                     ],
                   ),
 
@@ -138,7 +145,7 @@ class RoleSelectionPage extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const ProviderShell()),
+                          MaterialPageRoute(builder: (_) => const DashboardPage()),
                         );
                       },
                       style: ElevatedButton.styleFrom(

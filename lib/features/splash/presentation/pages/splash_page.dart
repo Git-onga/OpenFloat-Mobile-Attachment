@@ -24,10 +24,7 @@ class _SplashPageState extends State<SplashPage>
       vsync: this,
       duration: const Duration(milliseconds: 2000),
     );
-    _fadeIn = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
+    _fadeIn = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
 
     Future.delayed(const Duration(seconds: 3), () {
@@ -56,7 +53,7 @@ class _SplashPageState extends State<SplashPage>
               children: [
                 SizedBox(height: size.height * 0.3),
                 // City skyline at center
-               SizedBox(
+                SizedBox(
                   height: 350, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -64,9 +61,9 @@ class _SplashPageState extends State<SplashPage>
                     fit: BoxFit.fitWidth,
                   ),
                 ),
-                
+
                 // Electrician at bottom
-                 SizedBox(
+                SizedBox(
                   height: 150, // optional
                   width: double.infinity,
                   child: Image.asset(
@@ -74,7 +71,6 @@ class _SplashPageState extends State<SplashPage>
                     fit: BoxFit.contain,
                   ),
                 ),
-                
               ],
             ),
           ),
@@ -110,11 +106,7 @@ class _SplashPageState extends State<SplashPage>
                   // const SizedBox(height: 6),
 
                   // Separator line
-                  Container(
-                    width: 50,
-                    height: 2,
-                    color: AppColors.navy,
-                  ),
+                  Container(width: 50, height: 2, color: AppColors.navy),
 
                   // const SizedBox(height: 6),
 

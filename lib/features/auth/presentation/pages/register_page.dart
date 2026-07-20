@@ -39,12 +39,12 @@ class _RegisterPageState extends State<RegisterPage> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
-            RegisterSubmitted(
-              name: _nameController.text.trim(),
-              email: _emailController.text.trim(),
-              password: _passwordController.text.trim(),
-            ),
-          );
+        RegisterSubmitted(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ),
+      );
     }
   }
 
@@ -152,9 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
-                            decoration: _inputDecoration(
-                              AppStrings.fullName,
-                            ),
+                            decoration: _inputDecoration(AppStrings.fullName),
                             validator: (v) => Validators.required(v, 'Name'),
                           ),
 
@@ -169,9 +167,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               fontSize: 15,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
-                            decoration: _inputDecoration(
-                              AppStrings.email,
-                            ),
+                            decoration: _inputDecoration(AppStrings.email),
                             validator: Validators.email,
                           ),
 
@@ -197,8 +193,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  setState(() =>
-                                      _obscurePassword = !_obscurePassword);
+                                  setState(
+                                    () => _obscurePassword = !_obscurePassword,
+                                  );
                                 },
                               ),
                             ),
@@ -228,8 +225,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   size: 20,
                                 ),
                                 onPressed: () {
-                                  setState(() =>
-                                      _obscureConfirm = !_obscureConfirm);
+                                  setState(
+                                    () => _obscureConfirm = !_obscureConfirm,
+                                  );
                                 },
                               ),
                             ),
@@ -293,9 +291,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context)
-                                      .pushReplacementNamed(
-                                          AppRoutes.login);
+                                  Navigator.of(
+                                    context,
+                                  ).pushReplacementNamed(AppRoutes.login);
                                 },
                                 child: Text(
                                   AppStrings.loginHere,
@@ -342,10 +340,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(
-          color: AppColors.navy,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: AppColors.navy, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
@@ -353,10 +348,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
-        borderSide: const BorderSide(
-          color: AppColors.error,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: AppColors.error, width: 1.5),
       ),
       suffixIcon: suffixIcon,
     );
