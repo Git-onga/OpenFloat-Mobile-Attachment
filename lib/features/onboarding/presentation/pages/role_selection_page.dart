@@ -139,7 +139,7 @@ class RoleSelectionPage extends StatelessWidget {
 
                   // "Service Provider" button - navy bg, white outline
                   SizedBox(
-                    width: double.infinity,
+                    width: 200,
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {

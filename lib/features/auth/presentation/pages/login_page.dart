@@ -78,14 +78,14 @@ class _LoginPageState extends State<LoginPage> {
 
             // ── Mustard yellow container (bottom 70%) ──
             Positioned(
-              top: size.height * 0.30,
+              top: size.height * 0.20,
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(0x26FFB84D),
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.85),
+                  borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(56),
                   ),
                 ),
@@ -93,15 +93,15 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             // ── Subtle divider line between white & yellow ──
-            Positioned(
-              top: size.height * 0.30,
-              left: 0,
-              right: size.width * 0.45,
-              child: Container(
-                height: 2,
-                color: AppColors.navy.withValues(alpha: 0.08),
-              ),
-            ),
+            // Positioned(
+            //   top: size.height * 0.195,
+            //   left: 0,
+            //   right: size.width * 0.01,
+            //   child: Container(
+            //     height: 4,
+            //     color: AppColors.navy.withValues(alpha: 0.9),
+            //   ),
+            // ),
 
             // ── Content ──
             SafeArea(
@@ -117,12 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     // ── Back button ──
                     _buildBackButton(),
 
-                    const SizedBox(height: 24),
-
-                    // ── Brand header ──
-                    _buildBrandHeader(),
-
-                    const SizedBox(height: 48),
+                    const SizedBox(height: 120),
 
                     // ── Welcome heading ──
                     Text(
@@ -268,7 +263,7 @@ class _LoginPageState extends State<LoginPage> {
           right: -60,
           child: CircleAvatar(
             radius: 140,
-            backgroundColor: AppColors.navy.withValues(alpha: 0.05),
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
           ),
         ),
         // Mid-left medium circle
@@ -277,7 +272,7 @@ class _LoginPageState extends State<LoginPage> {
           left: -70,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: AppColors.navy.withValues(alpha: 0.04),
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
           ),
         ),
         // Bottom-right small circle
@@ -286,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
           right: -30,
           child: CircleAvatar(
             radius: 90,
-            backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
           ),
         ),
       ],
@@ -294,71 +289,75 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildBackButton() {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.navy.withValues(alpha: 0.06),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Icon(
-          Icons.arrow_back_rounded,
-          color: AppColors.navy,
-          size: 20,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBrandHeader() {
     return Row(
       children: [
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Center(
-            child: Text(
-              'K',
-              style: GoogleFonts.baloo2(
-                fontSize: 24,
-                fontWeight: FontWeight.w800,
-                color: AppColors.navy,
-              ),
+        GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.navy.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: const Icon(
+              Icons.arrow_back_rounded,
+              color: AppColors.navy,
+              size: 20,
             ),
           ),
         ),
-        const SizedBox(width: 12),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Kazi',
-              style: GoogleFonts.baloo2(
-                fontSize: 18,
-                fontWeight: FontWeight.w800,
-                color: AppColors.navy,
-                height: 1,
+
+        const SizedBox(width: 30),
+
+        Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Center(
+              child: Text(
+                'K',
+                style: GoogleFonts.baloo2(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.navy,
+                ),
               ),
             ),
-            Text(
-              'Connect',
-              style: GoogleFonts.nunito(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-                color: AppColors.primaryDark,
-                letterSpacing: 2,
-                height: 1,
+          ),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Kazi',
+                style: GoogleFonts.baloo2(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.navy,
+                  height: 1,
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+              Text(
+                'Connect',
+                style: GoogleFonts.nunito(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryDark,
+                  letterSpacing: 2,
+                  height: 1,
+                ),
+              ),
+            ],
+          ),
+        ],
+      )
+      ]
     );
   }
 

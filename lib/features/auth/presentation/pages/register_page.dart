@@ -82,30 +82,21 @@ class _RegisterPageState extends State<RegisterPage> {
             // ── Decorative circles ──
             _buildDecorativeCircles(size),
 
+            const SizedBox(height: 40),
+
             // ── Mustard yellow container (bottom 70%) ──
             Positioned(
-              top: size.height * 0.30,
+              top: size.height * 0.19,
               left: 0,
               right: 0,
               bottom: 0,
               child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(0x26FFB84D),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withValues(alpha: 0.85),
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(56),
                   ),
                 ),
-              ),
-            ),
-
-            // ── Subtle divider ──
-            Positioned(
-              top: size.height * 0.30,
-              left: 0,
-              right: size.width * 0.45,
-              child: Container(
-                height: 2,
-                color: AppColors.navy.withValues(alpha: 0.08),
               ),
             ),
 
@@ -118,17 +109,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 30),
 
                     // ── Back button ──
                     _buildBackButton(),
 
-                    const SizedBox(height: 24),
-
-                    // ── Brand header ──
-                    _buildBrandHeader(),
-
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 80),
 
                     // ── Heading ──
                     Text(
@@ -287,31 +273,31 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget _buildDecorativeCircles(Size size) {
     return Stack(
       children: [
-        // Top-left circle (swapped sides from login)
+        // Top-right large circle
         Positioned(
-          top: -60,
-          left: -50,
-          child: CircleAvatar(
-            radius: 130,
-            backgroundColor: AppColors.navy.withValues(alpha: 0.05),
-          ),
-        ),
-        // Mid-right circle
-        Positioned(
-          top: size.height * 0.45,
+          top: -80,
           right: -60,
           child: CircleAvatar(
-            radius: 90,
-            backgroundColor: AppColors.navy.withValues(alpha: 0.04),
+            radius: 140,
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
           ),
         ),
-        // Bottom-left small circle
+        // Mid-left medium circle
         Positioned(
-          bottom: -40,
-          left: -40,
+          top: size.height * 0.42,
+          left: -70,
           child: CircleAvatar(
-            radius: 80,
-            backgroundColor: AppColors.primary.withValues(alpha: 0.08),
+            radius: 100,
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
+          ),
+        ),
+        // Bottom-right small circle
+        Positioned(
+          bottom: -50,
+          right: -30,
+          child: CircleAvatar(
+            radius: 90,
+            backgroundColor: AppColors.textPrimary.withValues(alpha: 0.9),
           ),
         ),
       ],
@@ -319,21 +305,75 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget _buildBackButton() {
-    return GestureDetector(
-      onTap: () => Navigator.of(context).pop(),
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-          color: AppColors.navy.withValues(alpha: 0.06),
-          borderRadius: BorderRadius.circular(12),
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.navy.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(18),
+            ),
+            child: const Icon(
+              Icons.arrow_back_rounded,
+              color: AppColors.navy,
+              size: 20,
+            ),
+          ),
         ),
-        child: const Icon(
-          Icons.arrow_back_rounded,
-          color: AppColors.navy,
-          size: 20,
-        ),
-      ),
+
+        const SizedBox(width: 30),
+
+        Row(
+        children: [
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: Center(
+              child: Text(
+                'K',
+                style: GoogleFonts.baloo2(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.navy,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 12),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Kazi',
+                style: GoogleFonts.baloo2(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.navy,
+                  height: 1,
+                ),
+              ),
+              Text(
+                'Connect',
+                style: GoogleFonts.nunito(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryDark,
+                  letterSpacing: 2,
+                  height: 1,
+                ),
+              ),
+            ],
+          ),
+        ],
+      )
+      ]
     );
   }
 
