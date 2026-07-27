@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "947309718023",
+    "project_id": "kazi-connect-e7856",
+    "storage_bucket": "kazi-connect-e7856.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:947309718023:android:f22fc5bb9eeea4b42b58a2",
+        "android_client_info": {
+          "package_name": "com.example.home_link"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1EufEf_YL5uaHmWj39F5q6EgZHQnplCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

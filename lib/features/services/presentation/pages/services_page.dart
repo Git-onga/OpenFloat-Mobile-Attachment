@@ -38,69 +38,114 @@ class _ServicesPageState extends State<ServicesPage> {
             ),
           ),
         ),
+        const SizedBox(height: 4),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            'Find the right professional for your project',
+            style: GoogleFonts.nunito(
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
 
-            const SizedBox(height: 4),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                'Find the right professional for your project',
-                style: GoogleFonts.nunito(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+        // ─── Search Bar ──────────────────────
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: TextField(
+            onChanged: (v) => setState(() => _searchQuery = v),
+            style: GoogleFonts.nunito(
+              fontSize: 14,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            decoration: InputDecoration(
+              hintText: 'Search services...',
+              hintStyle: GoogleFonts.nunito(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+              prefixIcon: Icon(
+                Icons.search_rounded,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                size: 22,
+              ),
+              filled: true,
+              fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
+              contentPadding: const EdgeInsets.symmetric(vertical: 13),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(
+                  color: AppColors.navy,
+                  width: 1.5,
                 ),
               ),
             ),
+          ),
+        ),
+        
+        const SizedBox(height: 30),
 
-            const SizedBox(height: 16),
-
-            // ─── Search Bar ──────────────────────
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TextField(
-                onChanged: (v) => setState(() => _searchQuery = v),
-                style: GoogleFonts.nunito(
-                  fontSize: 14,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                decoration: InputDecoration(
-                  hintText: 'Search services...',
-                  hintStyle: GoogleFonts.nunito(
-                    fontSize: 14,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.search_rounded,
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    size: 22,
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(context).inputDecorationTheme.fillColor!,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 13),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: const BorderSide(
-                      color: AppColors.navy,
-                      width: 1.5,
+        // ─── Horizontal Scrollable Categories ──
+        SizedBox(
+          height: 160, // 👈 Adjust this to fit your card design
+          child: Scrollbar(
+            thumbVisibility: true,
+            child: filtered.isNotEmpty
+                ? ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    itemCount: filtered.length,
+                    itemBuilder: (context, index) {
+                      final category = filtered[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 12),
+                        child: _CategoryCard(category: category),
+                      );
+                    },
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.search_off_rounded,
+                          size: 48,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant
+                              .withValues(alpha: 0.4),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          'No services match',
+                          style: GoogleFonts.nunito(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ),
-            ),
+          ),
+        ),
 
-            const SizedBox(height: 20),
+        SizedBox(height: 40,),
 
-            // ─── Category Grid ───────────────────
-            Expanded(
+        Expanded(
               child: filtered.isNotEmpty
                   ? GridView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -134,7 +179,8 @@ class _ServicesPageState extends State<ServicesPage> {
                       ),
                     ),
             ),
-          ],
+
+      ],
     );
   }
 }
@@ -252,75 +298,79 @@ class _CategoryCard extends StatelessWidget {
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(14),
-          child: Column(
+          padding: const EdgeInsets.all(5),
+          child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Icon container
               Container(
-                width: 46,
-                height: 46,
+                width: 40,
+                height: 40,
                 decoration: BoxDecoration(
                   color: category.color.withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
                   category.icon,
                   color: category.color,
-                  size: 24,
+                  size: 18,
                 ),
               ),
 
-              const Spacer(),
+              const SizedBox(width: 20,),
 
-              // Name
-              Text(
-                category.name,
-                style: GoogleFonts.nunito(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              const SizedBox(height: 4),
-
-              // Description
-              Text(
-                category.description,
-                style: GoogleFonts.nunito(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  height: 1.3,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-
-              const SizedBox(height: 8),
-
-              // Available count
-              Row(
-                children: [
-                  Icon(
-                    Icons.person_outline,
-                    size: 12,
-                    color: AppColors.navy.withValues(alpha: 0.5),
+              Column(
+                // Name
+                children: [Text(
+                  category.name,
+                  style: GoogleFonts.nunito(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurface,
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${category.availableProviders} available',
-                    style: GoogleFonts.nunito(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.navyLight,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                const SizedBox(height: 4),
+
+                // Description
+                Text(
+                  category.description,
+                  style: GoogleFonts.nunito(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    height: 1.3,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+
+                const SizedBox(height: 8),
+
+                // Available count
+                Row(
+                  children: [
+                    Icon(
+                      Icons.person_outline,
+                      size: 12,
+                      color: AppColors.navy.withValues(alpha: 0.5),
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${category.availableProviders} available',
+                      style: GoogleFonts.nunito(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.navyLight,
+                      ),
+                    ),
+                  ],
+                ),
+                ]
+              )
+              
             ],
           ),
         ),
