@@ -12,8 +12,9 @@ class RegisterUseCase {
   Future<Either<Failure, User>> call(
     String email,
     String password,
-    String name,
-  ) {
-    return repository.register(email, password, name);
+    String name, {
+    String role = 'client',
+  }) {
+    return repository.register(email, password, name, role: role);
   }
 }

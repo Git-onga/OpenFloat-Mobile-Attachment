@@ -16,28 +16,34 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeDataRequested event,
     Emitter<HomeState> emit,
   ) async {
-    emit(state.copyWith(status: HomeStatus.loading));
+    emit(state.copyWith(status: HomeStatus.loading, errorMessage: null));
 
-    // Try API with a short timeout
     try {
-      final result = await getHomeDataUseCase()
-          .timeout(const Duration(seconds: 3));
+      final result = await getHomeDataUseCase();
 
       result.fold(
-        (_) => emit(state.copyWith(
-          status: HomeStatus.loaded,
-          items: _mockData,
-        )),
-        (items) => emit(state.copyWith(
-          status: HomeStatus.loaded,
-          items: items.isNotEmpty ? items : _mockData,
-        )),
+        (failure) {
+          // If there's a failure, use mock data for offline/demo mode
+          emit(state.copyWith(
+            status: HomeStatus.loaded,
+            items: _mockData,
+            errorMessage: failure.message,
+          ));
+        },
+        (items) {
+          // Use real data if available, otherwise fallback to mock data
+          emit(state.copyWith(
+            status: HomeStatus.loaded,
+            items: items.isNotEmpty ? items : _mockData,
+          ));
+        },
       );
-    } catch (_) {
-      // API timed out or threw — use mock data
+    } catch (e, stackTrace) {
+      // Catch any unexpected errors and use mock data
       emit(state.copyWith(
         status: HomeStatus.loaded,
         items: _mockData,
+        errorMessage: e.toString(),
       ));
     }
   }

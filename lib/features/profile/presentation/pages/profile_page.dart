@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../../../features/auth/presentation/bloc/auth_event.dart';
 import '../../../../features/settings/presentation/cubit/theme_cubit.dart';
 import '../../../../routes/app_routes.dart';
 
@@ -72,8 +74,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(ctx);
+              context.read<AuthBloc>().add(LogoutRequested());
               Navigator.of(context).pushNamedAndRemoveUntil(
-                AppRoutes.login,
+                AppRoutes.roleSelection,
                 (route) => false,
               );
             },

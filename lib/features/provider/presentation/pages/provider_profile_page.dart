@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../../../features/auth/presentation/bloc/auth_event.dart';
 import '../../../../features/provider/data/mock_provider_data.dart';
+import '../../../../routes/app_routes.dart';
 
 class ProviderProfilePage extends StatefulWidget {
   const ProviderProfilePage({super.key});
@@ -287,6 +291,62 @@ class _ProviderProfilePageState extends State<ProviderProfilePage> {
             ),
 
           const SizedBox(height: 30),
+
+          // ─── Logout ─────────────────────
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: () => _showLogoutDialog(context),
+              icon: const Icon(Icons.logout_rounded, size: 18),
+              label: Text('Log Out',
+                  style: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.w700)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.error,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 30),
+        ],
+      ),
+    );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Log Out',
+            style: GoogleFonts.baloo2(fontSize: 20, fontWeight: FontWeight.w700, color: AppColors.navy)),
+        content: Text('Are you sure you want to log out?',
+            style: GoogleFonts.nunito(fontSize: 14, color: Theme.of(context).colorScheme.onSurfaceVariant)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('Cancel',
+                style: GoogleFonts.nunito(fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              context.read<AuthBloc>().add(LogoutRequested());
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                AppRoutes.roleSelection,
+                (route) => false,
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            ),
+            child: Text('Log Out', style: GoogleFonts.nunito(fontWeight: FontWeight.w700)),
+          ),
         ],
       ),
     );

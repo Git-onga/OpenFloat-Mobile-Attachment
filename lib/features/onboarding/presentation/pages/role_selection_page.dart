@@ -3,10 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../features/provider/presentation/pages/provider_shell.dart';
 import '../../../../routes/app_routes.dart';
-
-import '../../../provider/presentation/pages/calendar_page.dart';
 
 class RoleSelectionPage extends StatelessWidget {
   const RoleSelectionPage({super.key});
@@ -80,15 +77,16 @@ class RoleSelectionPage extends StatelessWidget {
                   const SizedBox(height: 120),
 
                   // --- Role buttons ---
-                  // "Client" button - white bg, navy outline
+                  // "Client" button
                   SizedBox(
-                    width: 200,
+                    width: 220,
                     height: 56,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.of(
-                          context,
-                        ).pushReplacementNamed(AppRoutes.register);
+                        Navigator.of(context).pushReplacementNamed(
+                          AppRoutes.register,
+                          arguments: {'role': 'client'},
+                        );
                       },
                       style: OutlinedButton.styleFrom(
                         side: const BorderSide(
@@ -137,14 +135,15 @@ class RoleSelectionPage extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  // "Service Provider" button - navy bg, white outline
+                  // "Service Provider" button
                   SizedBox(
-                    width: 200,
+                    width: 220,
                     height: 56,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const ProviderShell()),
+                        Navigator.of(context).pushReplacementNamed(
+                          AppRoutes.register,
+                          arguments: {'role': 'provider'},
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -165,6 +164,24 @@ class RoleSelectionPage extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: AppColors.textOnPrimary,
                         ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // "Already have an account? Log In" link
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(AppRoutes.login);
+                    },
+                    child: Text(
+                      'Already have an account? Log In',
+                      style: GoogleFonts.nunito(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.navy,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
                   ),

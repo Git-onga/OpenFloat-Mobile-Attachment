@@ -4,7 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_event.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_state.dart';
+import 'package:home_link/features/auth/presentation/pages/login_page.dart';
 
+import '../../../provider/presentation/pages/provider_shell.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_dimensions.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -27,6 +29,21 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = TextEditingController();
   bool _obscurePassword = true;
   bool _obscureConfirm = true;
+  String _selectedRole = 'client';
+  bool _isRoleInitialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isRoleInitialized) {
+      final args = ModalRoute.of(context)?.settings.arguments
+          as Map<String, dynamic>?;
+      if (args != null && args.containsKey('role')) {
+        _selectedRole = args['role'] as String;
+      }
+      _isRoleInitialized = true;
+    }
+  }
 
   @override
   void dispose() {
@@ -38,15 +55,18 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onSubmit() {
+    print('🚀Start ...');
     if (_formKey.currentState!.validate()) {
       context.read<AuthBloc>().add(
             RegisterSubmitted(
               name: _nameController.text.trim(),
               email: _emailController.text.trim(),
               password: _passwordController.text.trim(),
+              role: _selectedRole,
             ),
           );
     }
+    print('🛑End ...');
   }
 
   @override
@@ -58,14 +78,33 @@ class _RegisterPageState extends State<RegisterPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authenticated) {
-          Navigator.of(context).pushReplacementNamed('/home');
+          if (state.user?.isProvider == true) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const ProviderShell()),
+            );
+          } else {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+          }
         } else if (state.status == AuthStatus.error) {
-          context.scaffoldMessenger.showSnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(state.errorMessage ?? 'Registration failed'),
+              content: Row(
+                children: [
+                  const Icon(Icons.error_outline, color: Colors.white, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      state.errorMessage ?? 'Registration failed. Please try again.',
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ],
+              ),
+              backgroundColor: const Color(0xFFD32F2F),
               behavior: SnackBarBehavior.floating,
+              duration: const Duration(seconds: 4),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
           );
@@ -117,18 +156,43 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 80),
 
                     // ── Heading ──
-                    Text(
-                      'Create Account',
-                      style: GoogleFonts.baloo2(
-                        fontSize: 34,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.navy,
-                        height: 1.1,
-                      ),
+                    Row(
+                      children: [
+                        Text(
+                          'Create Account',
+                          style: GoogleFonts.baloo2(
+                            fontSize: 34,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.navy,
+                            height: 1.1,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.navy,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Text(
+                            _selectedRole == 'provider'
+                                ? 'Provider'
+                                : 'Client',
+                            style: GoogleFonts.nunito(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'Sign up to get started with Kazi Connect',
+                      'Sign up as ${_selectedRole == 'provider' ? 'Service Provider' : 'Client'} to get started with Kazi Connect',
                       style: GoogleFonts.nunito(
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -226,10 +290,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           _buildPrimaryButton(
                             label: AppStrings.createAccount,
                             isLoading: isLoading,
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(AppRoutes.home);
-                            },
+                            onPressed: isLoading ? () {} : _onSubmit,
                           ),
 
                           const SizedBox(height: 28),
@@ -308,7 +369,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Row(
       children: [
         GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
+          onTap: () => Navigator.push(context, LoginPage() as Route<Object?>),
           child: Container(
             width: 40,
             height: 40,

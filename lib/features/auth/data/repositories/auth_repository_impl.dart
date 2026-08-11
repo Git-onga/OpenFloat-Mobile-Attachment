@@ -40,11 +40,17 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Either<Failure, User>> register(
     String email,
     String password,
-    String name,
-  ) async {
+    String name, {
+    String role = 'client',
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final user = await remoteDataSource.register(email, password, name);
+        final user = await remoteDataSource.register(
+          email,
+          password,
+          name,
+          role: role,
+        );
         await localDataSource.cacheUser(user);
         return Right(user);
       } on AuthException catch (e) {

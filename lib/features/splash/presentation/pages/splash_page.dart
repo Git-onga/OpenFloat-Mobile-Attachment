@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
+import '../../../../features/auth/presentation/bloc/auth_bloc.dart';
+import '../../../../features/auth/presentation/bloc/auth_event.dart';
+import '../../../../features/auth/presentation/bloc/auth_state.dart';
+import '../../../../features/provider/presentation/pages/provider_shell.dart';
 import '../../../../routes/app_routes.dart';
 
 class SplashPage extends StatefulWidget {
@@ -27,9 +32,23 @@ class _SplashPageState extends State<SplashPage>
     _fadeIn = CurvedAnimation(parent: _controller, curve: Curves.easeIn);
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 3), () {
+    context.read<AuthBloc>().add(AuthCheckRequested());
+
+    Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        Navigator.of(context).pushReplacementNamed(AppRoutes.roleSelection);
+        final authState = context.read<AuthBloc>().state;
+        if (authState.status == AuthStatus.authenticated &&
+            authState.user != null) {
+          if (authState.user!.isProvider) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const ProviderShell()),
+            );
+          } else {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+          }
+        } else {
+          Navigator.of(context).pushReplacementNamed(AppRoutes.roleSelection);
+        }
       }
     });
   }

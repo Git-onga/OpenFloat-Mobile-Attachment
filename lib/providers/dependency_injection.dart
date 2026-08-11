@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 import '../core/network/api_client.dart';
@@ -9,6 +11,7 @@ import '../features/auth/domain/usecases/login_usecase.dart';
 import '../features/auth/domain/usecases/logout_usecase.dart';
 import '../features/auth/domain/usecases/register_usecase.dart';
 import '../features/auth/presentation/bloc/auth_bloc.dart';
+import '../features/home/data/datasources/home_firebase_data_source.dart';
 import '../features/home/data/datasources/home_remote_data_source.dart';
 import '../features/home/data/repositories/home_repository_impl.dart';
 import '../features/home/domain/usecases/get_home_data_usecase.dart';
@@ -27,9 +30,16 @@ class DependencyInjection {
   );
   static final NetworkInfo _networkInfo = NetworkInfoImpl();
 
+  // Firebase
+  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   // Auth
   static final AuthRemoteDataSource _authRemoteDataSource =
-      AuthRemoteDataSourceImpl(apiClient: _apiClient);
+      AuthRemoteDataSourceImpl(
+    firebaseAuth: _firebaseAuth,
+    firestore: _firestore,
+  );
   static final AuthLocalDataSource _authLocalDataSource =
       AuthLocalDataSourceImpl();
 
@@ -49,15 +59,19 @@ class DependencyInjection {
       loginUseCase: _loginUseCase,
       registerUseCase: _registerUseCase,
       logoutUseCase: _logoutUseCase,
+      authRepository: _authRepository,
     );
   }
 
   // Home
   static final HomeRemoteDataSource _homeRemoteDataSource =
       HomeRemoteDataSourceImpl(apiClient: _apiClient);
+  static final HomeFirebaseDataSource _homeFirebaseDataSource =
+      HomeFirebaseDataSourceImpl(firestore: _firestore);
 
   static final HomeRepositoryImpl _homeRepository = HomeRepositoryImpl(
     remoteDataSource: _homeRemoteDataSource,
+    firebaseDataSource: _homeFirebaseDataSource,
     networkInfo: _networkInfo,
   );
 

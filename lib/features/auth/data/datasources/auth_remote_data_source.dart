@@ -1,10 +1,18 @@
-import '../../../../core/network/api_client.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
+
+import '../../../../core/errors/exceptions.dart';
 import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
   Future<UserModel> login(String email, String password);
 
-  Future<UserModel> register(String email, String password, String name);
+  Future<UserModel> register(
+    String email,
+    String password,
+    String name, {
+    String role = 'client',
+  });
 
   Future<void> logout();
 
@@ -12,42 +20,120 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final ApiClient apiClient;
+  final fb_auth.FirebaseAuth firebaseAuth;
+  final FirebaseFirestore firestore;
 
-  AuthRemoteDataSourceImpl({required this.apiClient});
+  AuthRemoteDataSourceImpl({
+    required this.firebaseAuth,
+    required this.firestore,
+  });
 
   @override
   Future<UserModel> login(String email, String password) async {
-    final response = await apiClient.post(
-      '/auth/login',
-      body: {'email': email, 'password': password},
-    );
-    return UserModel.fromJson(response['data'] as Map<String, dynamic>);
+    try {
+      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      final uid = userCredential.user?.uid;
+      if (uid == null) {
+        throw AuthException(message: 'Authentication failed');
+      }
+
+      final doc = await firestore.collection('users').doc(uid).get();
+      if (doc.exists && doc.data() != null) {
+        final data = Map<String, dynamic>.from(doc.data()!);
+        data['id'] = uid;
+        return UserModel.fromJson(data);
+      } else {
+        // Fallback user document if Firestore document is missing
+        final userModel = UserModel(
+          id: uid,
+          email: email,
+          name: userCredential.user?.displayName ?? email.split('@').first,
+          role: 'client',
+          createdAt: DateTime.now(),
+        );
+        await firestore.collection('users').doc(uid).set(userModel.toJson());
+        return userModel;
+      }
+    } on fb_auth.FirebaseAuthException catch (e) {
+      throw AuthException(message: e.message ?? 'Login failed');
+    } catch (e) {
+      if (e is AuthException) rethrow;
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override
   Future<UserModel> register(
     String email,
     String password,
-    String name,
-  ) async {
-    final response = await apiClient.post(
-      '/auth/register',
-      body: {'email': email, 'password': password, 'name': name},
-    );
-    return UserModel.fromJson(response['data'] as Map<String, dynamic>);
+    String name, {
+    String role = 'client',
+  }) async {
+    try {
+      final userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      final uid = userCredential.user?.uid;
+      if (uid == null) {
+        throw AuthException(message: 'Registration failed');
+      }
+
+      await userCredential.user?.updateDisplayName(name);
+
+      final userModel = UserModel(
+        id: uid,
+        email: email,
+        name: name,
+        role: role,
+        createdAt: DateTime.now(),
+      );
+
+      await firestore.collection('users').doc(uid).set(userModel.toJson());
+      return userModel;
+    } on fb_auth.FirebaseAuthException catch (e) {
+      throw AuthException(message: e.message ?? 'Registration failed');
+    } catch (e) {
+      if (e is AuthException) rethrow;
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override
   Future<void> logout() async {
-    await apiClient.post('/auth/logout');
+    try {
+      await firebaseAuth.signOut();
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
   }
 
   @override
   Future<UserModel?> getCurrentUser() async {
     try {
-      final response = await apiClient.get('/auth/me');
-      return UserModel.fromJson(response['data'] as Map<String, dynamic>);
+      final currentUser = firebaseAuth.currentUser;
+      if (currentUser == null) return null;
+
+      final doc = await firestore.collection('users').doc(currentUser.uid).get();
+      if (doc.exists && doc.data() != null) {
+        final data = Map<String, dynamic>.from(doc.data()!);
+        data['id'] = currentUser.uid;
+        return UserModel.fromJson(data);
+      }
+
+      return UserModel(
+        id: currentUser.uid,
+        email: currentUser.email ?? '',
+        name: currentUser.displayName ?? '',
+        role: 'client',
+        createdAt: DateTime.now(),
+      );
     } catch (_) {
       return null;
     }

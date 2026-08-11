@@ -21,15 +21,17 @@ class RegisterSubmitted extends AuthEvent {
   final String email;
   final String password;
   final String name;
+  final String role;
 
   const RegisterSubmitted({
     required this.email,
     required this.password,
     required this.name,
+    this.role = 'client',
   });
 
   @override
-  List<Object?> get props => [email, password, name];
+  List<Object?> get props => [email, password, name, role];
 }
 
 class LogoutRequested extends AuthEvent {}

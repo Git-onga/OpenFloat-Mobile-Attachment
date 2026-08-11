@@ -5,6 +5,7 @@ import 'package:home_link/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_event.dart';
 import 'package:home_link/features/auth/presentation/bloc/auth_state.dart';
 
+import '../../../provider/presentation/pages/provider_shell.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_dimensions.dart';
 import '../../../../core/constants/app_strings.dart';
@@ -52,7 +53,13 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.status == AuthStatus.authenticated) {
-          Navigator.of(context).pushReplacementNamed('/home');
+          if (state.user?.isProvider == true) {
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (_) => const ProviderShell()),
+            );
+          } else {
+            Navigator.of(context).pushReplacementNamed(AppRoutes.home);
+          }
         } else if (state.status == AuthStatus.error) {
           context.scaffoldMessenger.showSnackBar(
             SnackBar(
@@ -210,10 +217,7 @@ class _LoginPageState extends State<LoginPage> {
                           _buildPrimaryButton(
                             label: AppStrings.loginButton,
                             isLoading: isLoading,
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed(AppRoutes.home);
-                            },
+                            onPressed: isLoading ? () {} : _onSubmit,
                           ),
 
                           const SizedBox(height: 28),

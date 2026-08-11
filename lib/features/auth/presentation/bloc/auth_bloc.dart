@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../domain/repositories/auth_repository.dart';
 import '../../domain/usecases/login_usecase.dart';
 import '../../domain/usecases/logout_usecase.dart';
 import '../../domain/usecases/register_usecase.dart';
@@ -10,11 +11,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LoginUseCase loginUseCase;
   final RegisterUseCase registerUseCase;
   final LogoutUseCase logoutUseCase;
+  final AuthRepository authRepository;
 
   AuthBloc({
     required this.loginUseCase,
     required this.registerUseCase,
     required this.logoutUseCase,
+    required this.authRepository,
   }) : super(const AuthState()) {
     on<LoginSubmitted>(_onLoginSubmitted);
     on<RegisterSubmitted>(_onRegisterSubmitted);
@@ -32,7 +35,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.fold(
       (failure) => emit(
-        state.copyWith(status: AuthStatus.error, errorMessage: failure.message),
+        state.copyWith(
+          status: AuthStatus.error,
+          errorMessage: failure.message,
+          clearUser: true,
+        ),
       ),
       (user) => emit(
         state.copyWith(status: AuthStatus.authenticated, user: user),
@@ -50,11 +57,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       event.email,
       event.password,
       event.name,
+      role: event.role,
     );
 
     result.fold(
       (failure) => emit(
-        state.copyWith(status: AuthStatus.error, errorMessage: failure.message),
+        state.copyWith(
+          status: AuthStatus.error,
+          errorMessage: failure.message,
+          clearUser: true,
+        ),
       ),
       (user) => emit(
         state.copyWith(status: AuthStatus.authenticated, user: user),
@@ -74,6 +86,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     AuthCheckRequested event,
     Emitter<AuthState> emit,
   ) async {
-    // TODO: Implement auth state check (e.g., check stored token)
+    emit(state.copyWith(status: AuthStatus.loading));
+    final result = await authRepository.getCurrentUser();
+    result.fold(
+      (failure) => emit(const AuthState(status: AuthStatus.unauthenticated)),
+      (user) {
+        if (user != null) {
+          emit(AuthState(status: AuthStatus.authenticated, user: user));
+        } else {
+          emit(const AuthState(status: AuthStatus.unauthenticated));
+        }
+      },
+    );
   }
 }
